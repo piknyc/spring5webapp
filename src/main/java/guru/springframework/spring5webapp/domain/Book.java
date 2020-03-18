@@ -12,13 +12,16 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String title;
+	private String isbn;
+
+	@ManyToOne
+	private Publisher publisher;
+
 	@ManyToMany
 	@JoinTable(name = "author_book",
 			  joinColumns = @JoinColumn(name = "book_id"))
 	private Set<Author> authors = new HashSet<>();
-	private String isbn;
 
 	public Book() {
 	}
@@ -61,14 +64,21 @@ public class Book {
 		this.isbn = isbn;
 	}
 
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
 
 	@Override
 	public String toString() {
 		return "Book{" +
 				  "id=" + id +
 				  ", title='" + title + '\'' +
-				  ", authors=" + authors +
 				  ", isbn='" + isbn + '\'' +
+				  ", publisher='" + publisher + '\'' +
 				  '}';
 	}
 
